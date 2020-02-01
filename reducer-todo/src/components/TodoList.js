@@ -2,8 +2,11 @@ import React, { useContext } from "react";
 import { TodoContext } from "../context/TodoContext";
 
 const TodoList = () => {
-  const { state, toggleTodo } = useContext(TodoContext);
+  const { state, dispatch } = useContext(TodoContext);
   console.log("This is newState", state);
+  const toggleTodo = arg => {
+    dispatch({ type: "TOGGLE_TODO", payload: arg });
+  };
   return (
     <div>
       {state.map(todo => {
