@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from "react";
+import "./App.css";
+
+//imports
+import Form from "./components/Form";
+import TodoList from "./components/TodoList";
+import { TodoContext } from "./context/TodoContext";
+import { myReducer, initialState } from "./reducers/reducer";
 
 function App() {
+  const [state, dispatch] = useReducer(myReducer, initialState);
+
+  const toggleTodo = arg => {
+    dispatch({ type: "TOGGLE_TODO", payload: arg });
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TodoContext.Provider value={{ state, dispatch, toggleTodo }}>
+      <div>
+        <Form />
+        <TodoList />
+      </div>
+    </TodoContext.Provider>
   );
 }
 
